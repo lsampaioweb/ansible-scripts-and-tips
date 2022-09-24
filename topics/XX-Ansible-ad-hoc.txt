@@ -1,0 +1,24 @@
+01 - Execute command module.
+  ansible all -m command -a "uptime"
+  ansible all -m command -a "date"
+  ansible all -m command -a "who"
+  ansible all -m command -a "w"
+
+  *This is the default module.
+  ansible all -a "uptime"
+
+02 - Execute ad-hoc commands.
+  ansible all -m ping
+
+03 - Execute stats module.
+  ansible all -m stat -a "path=/etc/hosts"
+
+04 - Execute yum module.
+  -b = Become root.
+  ansible all -m yum -a "name=git" -b
+
+05 - Execute user module.
+  ansible all -m user -a "name=john" -b
+
+06 - Execute setup module.
+  ansible all -m setup
