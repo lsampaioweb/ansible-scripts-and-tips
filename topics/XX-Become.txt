@@ -1,0 +1,12 @@
+Understanding privilege escalation: become
+- name: Ensure the httpd service is running
+  service:
+    name: httpd
+    state: started
+  become: yes
+
+--ask-become-pass, -K
+ask for privilege escalation password; does not imply become will be used. Note that this password will be used for all hosts.
+
+--become, -b
+run operations with become (no password implied)

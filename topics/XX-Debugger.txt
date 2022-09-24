@@ -1,0 +1,17 @@
+Debugger
+[defaults]
+enable_task_debugger = True
+
+- name: My play
+  hosts: all
+  debugger: on_skipped
+  #debugger: always
+  #debugger: never
+  tasks:
+    - name: Execute a command
+      ansible.builtin.command: "true"
+      when: False  
+
+    - name: Execute a command
+      ansible.builtin.command: "false"
+      debugger: on_failed

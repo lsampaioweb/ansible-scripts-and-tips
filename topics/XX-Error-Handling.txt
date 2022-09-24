@@ -1,0 +1,21 @@
+Error Handling
+- name: Deploy a web application
+  hosts: app_servers
+  any_errors_fatal: true
+  tasks:
+    - name: Install dependencies
+      apt: name={{ item }} state=present
+      with_items:
+       - python
+
+- name: "Send notification email"
+  mail:
+    to: devops@corp.com
+    subject: Server Deployed!
+    body: Web Server Deployed Successfully
+  ignore_errors: yes
+
+- name: failed_when
+  command: cat file.log
+  register: output
+  failed_when: "'ERROR' in output.stdout"  

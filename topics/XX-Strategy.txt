@@ -1,0 +1,45 @@
+Strategy
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html
+By default, Ansible runs each task on all hosts affected by a play before starting the next task on any host, using 5 forks. If you want to change this default behavior, you can use a different strategy plugin, change the number of forks, or apply one of several keywords like serial.
+
+If you have the processing power available and want to use more forks, you can set the number in ansible.cfg or pass it on the command line: 
+ansible-playbook -f 30 my_playbook.yml.
+
+ansible.cfg
+[defaults]
+strategy = free
+forks = 30
+
+- name: Deploy a web application
+  hosts: app_servers
+  serial: 2
+  #serial: "20%"
+  strategy: linear
+  strategy: free
+  strategy: batch
+  vars:
+    db_password: Passw0rd
+  tasks:
+    - name: Install dependencies
+      apt: name={{ item }} state=installed
+      loop:
+       - python
+       - python-setuptools
+
+Restricting execution with throttle
+The throttle keyword limits the number of workers for a particular task. It can be set at the block and task level. Use throttle to restrict tasks that may be CPU-intensive or interact with a rate-limiting API:
+
+tasks:
+- command: /path/to/cpu_intensive_command
+  throttle: 1
+
+Running on a single machine with run_once
+If you want a task to run only on the first host in your batch of hosts, set run_once to true on that task:
+
+- command: /opt/application/upgrade_db.py
+  run_once: true
+
+delegate_to: web01.example.org
+
+- command: /opt/application/upgrade_db.py
+  when: inventory_hostname == webservers[0]

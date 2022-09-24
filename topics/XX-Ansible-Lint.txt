@@ -1,0 +1,4 @@
+Verifying playbooks
+You may want to verify your playbooks to catch syntax errors and other problems before you run them. The ansible-playbook command offers several options for verification, including --check, --diff, --list-hosts, --list-tasks, and --syntax-check
+
+ansible-role-<name> is the convention.

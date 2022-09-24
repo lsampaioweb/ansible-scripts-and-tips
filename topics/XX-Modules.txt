@@ -1,0 +1,9 @@
+apt
+service
+pip
+copy
+template
+file
+fetch
+shell
+command

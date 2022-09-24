@@ -1,0 +1,11 @@
+01 - Create a Ubuntu Desktop 22.04 on VirtualBox.
+
+02 - Install Git
+
+03 - Clone the github project.
+
+04 - Install Ansible.
+
+05 - Prepare Training VM.
+
+06 - 

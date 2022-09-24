@@ -1,5 +1,5 @@
 # Ansible Scripts and Tips
-Repository with script, tips, presentations (*.pptx) and exercises about Ansible.
+Repository with scripts, tips, presentations (*.pptx) and exercises about Ansible.
 
 # Links:
 

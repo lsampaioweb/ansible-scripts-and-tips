@@ -1,0 +1,22 @@
+Lookups
+- name: Test Connectivity
+  hosts: web_server
+  vars:
+    ansible_ssh_pass: "{{ lookup('csvfile', 'web_server file=credentials.csv delimiter=,') }}"
+    #ansible_ssh_pass: "{{ lookup('ini', 'password section=web_server file=credentials.ini') }}"
+  tasks:
+  - name: Ping target host
+    ping:
+      data: "Test"
+
+Using lookup plugins
+You can use lookup plugins anywhere you can use templating in Ansible: in a play, in variables file, or in a Jinja2 template for the template module. For more information on using lookup plugins, see Lookups.
+
+vars:
+  file_contents: "{{ lookup('file', 'path/to/file.txt') }}"      
+  msg: "{{ lookup('url', 'https://google.com/search/?q=' + item | urlencode) | join(' ') }}"
+
+- name: Generate random string
+  ansible.builtin.debug:
+    var: lookup('community.general.random_string')
+  # Example result: ['DeadBeeF']

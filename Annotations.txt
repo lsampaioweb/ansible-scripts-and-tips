@@ -1,0 +1,53 @@
+Getting started with Ansible
+  https://docs.ansible.com/ansible/latest/getting_started/index.html
+
+Windows Guides
+  https://docs.ansible.com/ansible/latest/user_guide/windows.html
+  WinRM 5985
+
+Formato muito ruim
+- name: Install packages
+  apt: name=python state=installed
+
+O correto é
+- name: Install packages
+  apt: 
+  name: "python"
+  state: "installed"
+
+db_and_web_server ansible_connection=ssh ansible_ssh_pass=Passw0rd ansible_host=192.168.1.14
+
+hosts:
+  all
+  host1, host2
+  localhost
+
+- name: Deploy a web application
+  hosts: db_and_web_server
+  tasks:
+    - name: Install MySQL database
+      apt:
+        name: "{{ item }}"
+        state:  "present"
+      loop:
+        - mysql-server
+        - mysql-client
+
+    - name: Start mysql
+      service:
+        name: "mysql"
+        enabled: true
+        state: "started"
+    
+    - name: Install Python Flask dependencies
+      pip:
+        name: '{{ item }}'
+        state: present
+      loop:
+       - "flask"
+       - "flask-mysql"
+
+    - name: Copy web-server code
+      copy: 
+        src: "app.py"
+        dest: "/opt/app.py"

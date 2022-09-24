@@ -1,0 +1,45 @@
+Conditionals
+tasks:
+- name: Shut down CentOS 6 and Debian 7 systems
+  ansible.builtin.command: /sbin/shutdown -t now
+  when: (ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "6") or
+        (ansible_facts['distribution'] == "Debian" and ansible_facts['distribution_major_version'] == "7")
+
+- name: Register a variable
+  ansible.builtin.shell: cat /etc/motd
+  register: motd_contents
+
+- name: Use the variable in conditional statement
+  ansible.builtin.shell: echo "motd contains the word hi"
+  when: motd_contents.stdout.find('hi') != -1
+
+tasks:
+  - name: Register a variable, ignore errors and continue
+    ansible.builtin.command: /bin/false
+    register: result
+    ignore_errors: true
+
+  - name: Run only if the task that registered the "result" variable fails
+    ansible.builtin.command: /bin/something
+    when: result is failed
+
+  - name: Run only if the task that registered the "result" variable succeeds
+    ansible.builtin.command: /bin/something_else
+    when: result is succeeded
+
+  - name: Run only if the task that registered the "result" variable is skipped
+    ansible.builtin.command: /bin/still/something_else
+    when: result is skipped  
+
+vars:
+  epic: true
+  monumental: "yes"
+
+tasks:
+  - name: Run the command if "epic" or "monumental" is true
+    ansible.builtin.shell: echo "This certainly is epic!"
+    when: epic or monumental | bool
+
+  - name: Run the command if "epic" is false
+    ansible.builtin.shell: echo "This certainly isn't epic!"
+    when: not epic  
