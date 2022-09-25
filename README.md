@@ -3,7 +3,7 @@ Repository with scripts, tips, presentations (*.pptx) and exercises about Ansibl
 
 # Links:
 
-[Links](Links.md "Links")
+1. [Ansible Documentation.](https://docs.ansible.com/ansible/latest/index.html)
 
 # License:
 
